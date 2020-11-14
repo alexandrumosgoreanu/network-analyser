@@ -33,8 +33,8 @@ public class Analyser
 	
 		EthernetHeader myEthernetHeader = new EthernetHeader(aux);
 		String protocolType = myEthernetHeader.typeToProtocol();
-		
 		aux.clear();	//vider l'ArrayList auxiliare
+		
 		switch(protocolType)
 		{
 			case "ARP": 
@@ -42,13 +42,20 @@ public class Analyser
 				for(i = 14; i < 42; i++)	//un message ARP a 28 bytes
 					aux.add(frame.get(i));
 				ARPMessage myARPMessage = new ARPMessage(aux);
+				System.out.println(myEthernetHeader);
+				System.out.println(myARPMessage);
+				break;
 			}
+			case "IPv4":
+			{
+				System.out.println(myEthernetHeader);
+				break;
+			}
+			default: break;
+			//TODO restul de cazuri
 		}
 		
-		System.out.println(myEthernetHeader);
-		
-		
-		
+		System.out.println("_____________________________________________\n");
 		
 	}
 	
@@ -66,7 +73,7 @@ public class Analyser
 		int current_offset = 0, offset;			//pour compter l'offset courant
 		Byte offsetByte = new Byte();		//pour lire l'offset au debut de la ligne
 		List<String> list = new ArrayList<>();	//pour stocker les octets(comme Strings) d'une trame
-
+		int trame_nr = 1;
 		
 		while ((line = br.readLine()) != null)
 		{	
@@ -83,6 +90,7 @@ public class Analyser
 				{
 					if(!list.isEmpty())
 					{
+						System.out.println("Trame numero: " + trame_nr++);
 						decodeFrame(list);		//decode the frame 
 						list.clear();
 					}
@@ -126,6 +134,7 @@ public class Analyser
 			
 		} //end while 
 		//System.out.println(list);
+		System.out.println("Trame numero: " + trame_nr++);
 		decodeFrame(list);
 		
 		br.close();

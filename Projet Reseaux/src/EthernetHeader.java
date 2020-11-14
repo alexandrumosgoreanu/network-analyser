@@ -50,7 +50,7 @@ public class EthernetHeader
 			StringBuilder sb = new StringBuilder();
 			int i;
 			
-			sb.append("Ethernet II:\n\t");
+			sb.append("\tEthernet II:\n\t\t");
 			sb.append("Destination: ");
 			
 			if(isBroadcast())
@@ -72,7 +72,7 @@ public class EthernetHeader
 						sb.append(":");
 				}
 			
-			sb.append("\n\t").append("Source: ");
+			sb.append("\n\t\t").append("Source: ");
 			for(i = 0; i < 6; i++)
 			{	
 				sb.append(adr_source[i].getHexValue());
@@ -82,8 +82,8 @@ public class EthernetHeader
 				
 		
 			
-			sb.append("\n\t").append("Type: 0x");
-			sb.append(type[0].getHexValue()).append(type[1].getHexValue()).append(" (").append(typeToProtocol()).append(")");
+			sb.append("\n\t\t").append("Type: 0x");
+			sb.append(type[0].getHexValue()).append(type[1].getHexValue()).append(" (").append(typeToProtocol()).append(")\n");
 			
 			return sb.toString();
 		}
