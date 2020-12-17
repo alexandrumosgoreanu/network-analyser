@@ -1,0 +1,69 @@
+
+Trame numero 1:
+	Ethernet II:
+		Destination: Broadcast (FF:FF:FF:FF:FF:FF)
+		Source: 08:00:20:02:45:9E
+		Type: 0x0806 (ARP)
+
+	Address Resolution Protocol (request)
+		Hardware type: Ethernet (1)
+		Protocol type: IPv4 (0x0800)
+		Hardware size: 6
+		Protocol size: 4
+		Opcode: request (1)
+		Sender MAC address: 08:00:20:02:45:9E
+		Sender IP address: 129.104.254.6
+		Target MAC address: 00:00:00:00:00:00
+		Target IP address: 129.104.254.5
+___________________________________________________________________
+
+Error, offset not correct at line: 14
+Error, offset not correct at line: 15
+
+Trame numero 2:
+	Ethernet II:
+		Destination: 00:50:7F:05:7D:40
+		Source: 00:10:A4:86:2D:0B
+		Type: 0x0800 (IPv4)
+
+	Internet Protocol Version 4:
+		Version: 4
+		Header Length: 20 bytes (5)
+		Differentiated Services Field: 0x00
+				Differentiated Services Codepoint: 0
+				Explicit Congestion Notification: 0
+		Total Length: 52
+		Identification: 0x1797 (6039)
+		Flags: 0x4000
+				Reserved bit: Not set
+				Don't Fragment: Set
+				More Fragments: Not set
+			Fragment Offset: 0
+		Time to live: 64
+		Protocol: TCP (6)
+		Header checksum: 0x6DFA
+		Source address: 10.33.182.178
+		Destination address: 192.55.52.40
+
+	Transmission Control Protocol:
+		Source Port: 33971
+		Destination Port: 80
+		Sequence number: 3063197880
+		Acknowledgement number: 610765289
+		Header Length: 32 bytes (8)
+		Flags: 0x010
+				Reserved: Not set
+				Nonce: Not set
+				Congestion Window Reduced (CWR): Not set
+				ECN-Echo: Not set
+				Urgent: Not set
+				Acknowledgement: Set
+				Push: Not set
+				Reset: Not set
+				Syn: Not set
+				Fin: Not set
+		Window size value: 5840
+		Checksum: 0x6877
+		Urgent pointer: 0
+___________________________________________________________________
+

@@ -224,7 +224,7 @@ public class Analyser extends Application
 			}//end if(isHexa(words[0]);
 			
 		} //end while 
-		//System.out.println(list);
+		
 		//System.out.println("Trame numero " + trame_nr++ + ":");
 		
 		//last frame

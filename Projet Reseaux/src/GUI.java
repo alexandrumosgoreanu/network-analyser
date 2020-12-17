@@ -68,7 +68,7 @@ public class GUI
 		stage.show();
 	}
 	
-	
+	 
 	
 	public static void println(String s)
 	{

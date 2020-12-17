@@ -1,0 +1,49 @@
+
+
+Trame numero 1:
+	Ethernet II:
+		Destination: 00:50:7F:05:7D:40
+		Source: 00:10:A4:86:2D:0B
+		Type: 0x0800 (IPv4)
+
+	Internet Protocol Version 4:
+		Version: 4
+		Header Length: 20 bytes (5)
+		Differentiated Services Field: 0x00
+				Differentiated Services Codepoint: 0
+				Explicit Congestion Notification: 0
+		Total Length: 60
+		Identification: 0x1796 (6038)
+		Flags: 0x4000
+				Reserved bit: Not set
+				Don't Fragment: Set
+				More Fragments: Not set
+			Fragment Offset: 0
+		Time to live: 64
+		Protocol: TCP (6)
+		Header checksum: 0x6DF3
+		Source address: 10.33.182.178
+		Destination address: 192.55.52.40
+
+	Transmission Control Protocol:
+		Source Port: 33971
+		Destination Port: 80
+		Sequence number: 3063197879
+		Acknowledgement number: 0
+		Header Length: 40 bytes (10)
+		Flags: 0x002
+				Reserved: Not set
+				Nonce: Not set
+				Congestion Window Reduced (CWR): Not set
+				ECN-Echo: Not set
+				Urgent: Not set
+				Acknowledgement: Not set
+				Push: Not set
+				Reset: Not set
+				Syn: Set
+				Fin: Not set
+		Window size value: 5840
+		Checksum: 0xE823
+		Urgent pointer: 0
+___________________________________________________________________
+
