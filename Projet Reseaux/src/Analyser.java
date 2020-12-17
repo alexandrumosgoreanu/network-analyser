@@ -225,7 +225,7 @@ public class Analyser extends Application
 			
 		} //end while 
 		
-		//System.out.println("Trame numero " + trame_nr++ + ":");
+		
 		
 		//last frame
 		if(!list.isEmpty())	//check if the file actually had bytes in it
