@@ -143,7 +143,7 @@ public class Analyser extends Application
 						//System.out.println("Trame numero " + trame_nr++ + ":");
 						if(ok == 1)
 						{
-							GUI.println("\n\nTrame numero " + trame_nr++ + ":");
+							GUI.println("\nTrame numero " + trame_nr++ + ":");
 							decodeFrame(list);		//decode the frame 
 						}
 						ok = 1;
@@ -227,13 +227,25 @@ public class Analyser extends Application
 		//System.out.println(list);
 		//System.out.println("Trame numero " + trame_nr++ + ":");
 		
-
-		if(ok == 1)	//the frame is printable
+		//last frame
+		if(!list.isEmpty())	//check if the file actually had bytes in it
 		{
-			GUI.println("\n\nTrame numero " + trame_nr++ + ":");
-			decodeFrame(list);
+			if(ok == 1)	//the frame is printable
+			{
+				GUI.println("\nTrame numero " + trame_nr++ + ":");
+				decodeFrame(list);
+			}
 		}
-		
+		else	//the file had no bytes in it
+		{
+			GUI.println("The file you selected doesn't contain any valid trace");
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning dialog");
+			alert.setHeaderText("No trace detected");
+			alert.setContentText("Ooops, the file you selected doesn't contain any valid trace. Please verify that you selected the right file");
+			alert.show();
+		}
+			
 		br.close();
 		
 	}

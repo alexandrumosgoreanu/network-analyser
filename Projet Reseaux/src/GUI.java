@@ -1,5 +1,8 @@
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +18,7 @@ import javafx.stage.Stage;
 public class GUI 
 {
 	private static Text textArea = new Text();
+	public static String fileName;
 	
 	public GUI(Stage stage)
 	{
@@ -29,7 +33,7 @@ public class GUI
 		openFileButton.setOnAction(e -> {
 									FileChooser fileChooser = new FileChooser();
 									File selectedFile = fileChooser.showOpenDialog(stage);
-									String fileName = selectedFile.getPath();
+									fileName = selectedFile.getPath();
 									
 									try {
 										textArea.setText("");
@@ -75,6 +79,14 @@ public class GUI
 	        public void run() 
 	        {
 	            textArea.setText(textArea.getText()+s+"\n");
+	            try {
+	            	String str = fileName.substring(0, fileName.length() - 4);
+					FileWriter fw = new FileWriter(str + "_decoded.txt");
+					fw.write(textArea.getText());
+					fw.close();
+				} catch (IOException e) {
+					System.out.println("Couldn't open file");
+				}
 	            System.out.println(s);//for echo if you want
 	        }
 	    });
