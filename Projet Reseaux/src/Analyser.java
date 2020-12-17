@@ -1,12 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 
 
-public class Analyser 
+public class Analyser extends Application
 {
 
 	public static boolean isHexa(String str)
@@ -42,20 +45,61 @@ public class Analyser
 				for(i = 14; i < 42; i++)	//un message ARP a 28 bytes
 					aux.add(frame.get(i));
 				ARPMessage myARPMessage = new ARPMessage(aux);
-				System.out.println(myEthernetHeader);
-				System.out.println(myARPMessage);
+				//System.out.println(myEthernetHeader);
+				//System.out.println(myARPMessage);
+				GUI.println(myEthernetHeader.toString());
+				GUI.println(myARPMessage.toString());
 				break;
 			}
 			case "IPv4":
 			{
-				System.out.println(myEthernetHeader);
+				for (i = 14; i < 34; i++)	//un message IPv4 a 20 bytes
+					aux.add(frame.get(i));
+				IPv4 myIPv4 = new IPv4(aux);
+				String ProtocolType2 = myIPv4.get_protocol();
+				aux.clear();
+				
+				//System.out.println(myEthernetHeader);
+				//System.out.println(myIPv4);
+				GUI.println(myEthernetHeader.toString());
+				GUI.println(myIPv4.toString());
+				
+				int header_ipv4 = myIPv4.get_header_length();
+				int total_length = myIPv4.get_total_length();
+				if (header_ipv4 != 20) {
+					// expect options && prelucrare options
+				}
+				switch (ProtocolType2) {
+					case "ICMP": {
+						break;
+					}
+					case "TCP": {
+						for (i = 34; i < 34 + total_length - header_ipv4; i++)	//un header TCP a 20 bytes
+							aux.add(frame.get(i));
+						TCP myTCP = new TCP(aux);
+						//System.out.println(myTCP);
+						GUI.println(myTCP.toString());
+						break;
+					}
+					case "UDP": {
+
+					}
+					default: {
+						System.out.println("another");
+					}
+
+
+				}
+
 				break;
+				
 			}
 			default: break;
 			//TODO restul de cazuri
 		}
 		
-		System.out.println("_____________________________________________\n");
+		//System.out.println("_____________________________________________\n");
+		GUI.println("___________________________________________________________________\n");
 		
 	}
 	
@@ -63,10 +107,14 @@ public class Analyser
 	/**
 	 * Methode qui permet de lire le traces d'un fichier texte, qui contient es octets bruts
 	 * @param fileName	le nom du fichier ou se trouve la trace
-	 * @throws IOException	s'il y a des problemes avec le fichier
+	 * @throws Exception 
 	 */
-	public static void readFrame(String fileName) throws IOException
+	public static void readFrame(String fileName) throws Exception
 	{
+
+		int ok = 1;
+		int current_line = 0;
+		
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		
 		String line, words[] = null;	//line pour lire les lignes, words[] pour separer les octets d'une ligne
@@ -77,6 +125,7 @@ public class Analyser
 		
 		while ((line = br.readLine()) != null)
 		{	
+			current_line++;
 			if(line.isEmpty())
 				continue;	//continue si on a un ligne vide
 			else
@@ -86,33 +135,61 @@ public class Analyser
 				continue;	//continue si la ligne ne commence pas par un offset valide
 			else
 			{
-				if(words[0].equals("00"))	//new frame
+				if(words[0].equals("0000"))	//new frame
 				{
+					
 					if(!list.isEmpty())
 					{
-						System.out.println("Trame numero: " + trame_nr++);
-						decodeFrame(list);		//decode the frame 
+						//System.out.println("Trame numero " + trame_nr++ + ":");
+						if(ok == 1)
+						{
+							GUI.println("\n\nTrame numero " + trame_nr++ + ":");
+							decodeFrame(list);		//decode the frame 
+						}
+						ok = 1;
 						list.clear();
 					}
 						
 					current_offset = 0;	//nouvelle trame => current offset = 0
 						
 					for(int i = 1; i < words.length; i++)
-						if(isHexa(words[0]))
+						if(isHexa(words[i]))
+						{
 							list.add(words[i]);
+							current_offset++;
+						}
 				}
 				else 	//the same frame
 				{
+
 					if(current_offset < 256)	//offset est seulement un byte
 					{
 						offsetByte = new Byte(words[0]);		//offset byte
 						offset = offsetByte.getValue();			//convert to int
+						
+						//System.out.println(offset);
+						
 						if(offset != current_offset)
-							System.out.println("Error, offset not right");	 //throw ceva exceptie custom
+						{
+							//System.out.println("Error, offset not right at line: " + current_line);	 //throw ceva exceptie custom
+							GUI.println("Error, offset not correct at line: " + current_line);
+							Alert alert = new Alert(AlertType.ERROR);
+							alert.setTitle("Error dialog");
+							alert.setHeaderText("Corrupt trace");
+							alert.setContentText("Ooops, the offset on line " + current_line + " is not correct. The file might be corrupted.");
+							alert.show();
+							ok = 0; 	//can't print this trace
+							continue;
+							//br.close();
+							//throw new Exception("Error, offset not correct at line: " + current_line);
+						}
 						else
 							for(int i = 1; i < words.length; i++)
-								if(isHexa(words[0]))
+								if(isHexa(words[i]))
+								{
 									list.add(words[i]);
+									current_offset++;
+								}
 					}
 					else //la trame a >=256 et <1500(0x5DC) octets, donc offset est sur 2 octets
 					{
@@ -122,30 +199,57 @@ public class Analyser
 						offset += offsetByte.getValue();
 						
 						if(offset != current_offset)
-							System.out.println("Error, offset not right");	 //throw ceva exceptie custom
+						{
+							//System.out.println("Error, offset not right");	 //throw ceva exceptie custom
+							GUI.println("Error, offset not correct at line: " + current_line);
+							Alert alert = new Alert(AlertType.ERROR);
+							alert.setTitle("Error dialog");
+							alert.setHeaderText("Corrupt trace");
+							alert.setContentText("Ooops, the offset on line " + current_line + " is not correct. The file might be corrupted.");
+							alert.show();
+							ok = 0; 	//can't print this trace
+							continue;
+							//br.close();
+							///throw new Exception("Error, offset not correct at line + " + current_line);
+						}
 						else
 							for(int i = 2; i < words.length; i++)
-								if(isHexa(words[0]))
+								if(isHexa(words[i]))
+								{
 									list.add(words[i]);
+									current_offset++;
+								}
 					}
 				}//end else
 			}//end if(isHexa(words[0]);
-				current_offset += words.length - 1;
 			
 		} //end while 
 		//System.out.println(list);
-		System.out.println("Trame numero: " + trame_nr++);
-		decodeFrame(list);
+		//System.out.println("Trame numero " + trame_nr++ + ":");
+		
+
+		if(ok == 1)	//the frame is printable
+		{
+			GUI.println("\n\nTrame numero " + trame_nr++ + ":");
+			decodeFrame(list);
+		}
 		
 		br.close();
 		
 	}
 	
 	
-	public static void main(String[] args) throws IOException
+	public void start(Stage stage) throws Exception
 	{
-		
-		String fileName = "data/input.txt";
-		readFrame(fileName);
+		new GUI(stage);
 	}
+	
+	
+	public static void main(String[] args) 
+	{
+		Application.launch(args);
+	}
+
+
+
 }

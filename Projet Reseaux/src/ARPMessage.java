@@ -117,7 +117,7 @@ public class ARPMessage
 		sb.append("\tAddress Resolution Protocol (").append(convertOpcode()).append(")");
 		sb.append("\n\t\tHardware type: ").append(convertHwType());
 		
-		sb.append("\n\t\tProtocol type: ").append(convertToProtocol()).append(" (0x").append(ProtocolType[0].getHexValue()).append(ProtocolType[1].getHexValue());
+		sb.append("\n\t\tProtocol type: ").append(convertToProtocol()).append(" (0x").append(ProtocolType[0].getHexValue()).append(ProtocolType[1].getHexValue()).append(")");
 		sb.append("\n\t\tHardware size: ").append(HLEN);
 		sb.append("\n\t\tProtocol size: ").append(PLEN);
 		sb.append("\n\t\tOpcode: ").append(convertOpcode()).append(" (").append(opcode[1].getValue()).append(")");

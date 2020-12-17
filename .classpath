@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="Projet Reseaux/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="Projet Reseaux/src"/>
+	<classpathentry kind="output" path="Projet Reseaux/bin"/>
+</classpath>
