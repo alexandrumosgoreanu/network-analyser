@@ -5,15 +5,15 @@ public class ARPMessage
 	/**
 	 * les atributs sont tous les attributs necessaire pour decoder un message ARP
 	 */
-	private Byte[] HardwareType = new Byte[2];
-	private Byte[] ProtocolType = new Byte[2];
-	private int HLEN;	//ethernet = 48
-	private int PLEN;	//IPv4 = 32
-	private Byte[] opcode = new Byte[2];
-	private Byte[] source_hw_adr = new Byte[6];			//source MAC adr
-	private Byte[] dest_hw_adr = new Byte[6];			//dest MAC adr
-	private Byte[] source_protocol_adr = new Byte[4];	//source ip adresse
-	private Byte[] dest_protocol_adr = new Byte[4];		//dest ip adresse
+	private final Byte[] HardwareType = new Byte[2];
+	private final Byte[] ProtocolType = new Byte[2];
+	private final int HLEN;	//ethernet = 48
+	private final int PLEN;	//IPv4 = 32
+	private final Byte[] opcode = new Byte[2];
+	private final Byte[] source_hw_adr = new Byte[6];			//source MAC adr
+	private final Byte[] dest_hw_adr = new Byte[6];			//dest MAC adr
+	private final Byte[] source_protocol_adr = new Byte[4];	//source ip adresse
+	private final Byte[] dest_protocol_adr = new Byte[4];		//dest ip adresse
 	
 	
 	/**

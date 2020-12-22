@@ -1,0 +1,59 @@
+
+Trame numero 1:
+	Ethernet II:
+		Destination: 80:8C:97:74:AE:5D
+		Source: 80:32:53:4C:A0:36
+		Type: 0x0800 (IPv4)
+
+	Internet Protocol Version 4:
+		Version: 4
+		Header Length: 20 bytes (5)
+		Differentiated Services Field: 0x00
+				Differentiated Services Codepoint: 0
+				Explicit Congestion Notification: 0
+		Total Length: 614
+		Identification: 0x4C35 (19509)
+		Flags: 0x4000
+				Reserved bit: Not set
+				Don't Fragment: Set
+				More Fragments: Not set
+				Fragment Offset: 0
+		Time to live: 128
+		Protocol: TCP (6)
+		Header checksum: 0x0000
+		Source: 192.168.1.122
+		Destination: 216.105.38.10
+
+	Transmission Control Protocol:
+		Source Port: 50841
+		Destination Port: 80
+		Sequence number: 526509209
+		Acknowledgement number: 4153128336
+		Header Length: 20 bytes (5)
+		Flags: 0x018
+				Reserved: Not set
+				Nonce: Not set
+				Congestion Window Reduced (CWR): Not set
+				ECN-Echo: Not set
+				Urgent: Not set
+				Acknowledgement: Set
+				Push: Set
+				Reset: Not set
+				Syn: Not set
+				Fin: Not set
+		Window size value: 516
+		Checksum: 0xC2EE
+		Urgent pointer: 0
+
+	Hypertext Transfer Protocol:
+		GET / HTTP/1.1
+		Host: launch4j.sourceforge.net
+		Connection: keep-alive
+		Upgrade-Insecure-Requests: 1
+		User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66
+		Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+		Referer: https://medium.com/mpercept-academy/how-to-make-a-executable-file-from-your-java-code-3f521938ae5c
+		Accept-Encoding: gzip, deflate
+		Accept-Language: en-US,en;q=0.9,ro;q=0.8,fr;q=0.7
+___________________________________________________________________
+

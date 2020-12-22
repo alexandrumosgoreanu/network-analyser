@@ -1,0 +1,21 @@
+Frame analyser v1.0, by Mosgoreanu Alexandru-Zaharia & Popescu Diana-Elena
+
+System Requirements:
+	- Java SE Runtime Environment 8 doit etre instale(https://www.oracle.com/ro/java/technologies/javase-jre8-downloads.html)
+pour etre capable d'executer le programme.
+
+
+Instructions:
+	1. Executer Network Analyser v1.0.
+	2. Cliquer sur "Open file" pour selecter le fichier texte que vous voulez de decoder
+	3. Le resultat sera affiche sur l'interface graphique et aussi dans un fichier qui se trouve dans le meme dossier 
+que le fichier initial. Son nom est "nom_du_fichier_initial_decoded.txt"
+	4. Pour decoder un autre fichier, passer à l'étape 2
+
+Structure de code:
+	
+	1. Class Byte - cette classe est utilisee pour decoder un string dans un nombre en hexa. On utilise les methodes
+Byte.getValue() pour recuperer la valeur en decimal, Byte.getHexValue() pour recuperer la valeur en hexa et la methode
+toString() pour l'afficher
+	2. Class GUI - l'interface graphique, realisee en JavaFx 
+	3. Class EthernetHeader - cette classe prend les premiers 14 octets de la trame et les decode

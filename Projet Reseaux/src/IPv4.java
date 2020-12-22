@@ -18,7 +18,7 @@ public class IPv4 {
 
 
         int i, j;
-      //  Byte aux;
+       // Byte aux;
 
         Version = Integer.parseInt(String.valueOf(list.get(0).charAt(0)));
         Header_length = new Byte(list.get(0).substring(1));
@@ -40,11 +40,11 @@ public class IPv4 {
         Checksum[1] = new Byte(list.get(11));
 
         j = 0;
-        for(i = 12; i < 16; i++)
+        for (i = 12; i < 16; i++)
             source_protocol_adr[j++] = new Byte(list.get(i));
 
         j = 0;
-        for(i = 16; i < 20; i++)
+        for (i = 16; i < 20; i++)
             dest_protocol_adr[j++] = new Byte(list.get(i));
     }
     public String is_set(int i) {
@@ -64,7 +64,7 @@ public class IPv4 {
             case 8: return "EGP";
             case 17: return "UDP";
             case 36: return "XTP";
-            default: return "another";
+            default: return "aia e";
         }
     }
 
@@ -96,10 +96,13 @@ public class IPv4 {
         sb.append("\n\t\tTime to live: " + TTL.getValue());
         sb.append("\n\t\tProtocol: " + get_protocol() + " (" + Protocol.getValue() + ")");
         sb.append("\n\t\tHeader checksum: 0x" + Checksum[0].getHexValue() + Checksum[1].getHexValue());
-        sb.append("\n\t\tSource address: " + source_protocol_adr[0].getValue() + "." + source_protocol_adr[1].getValue() + "."
+        sb.append("\n\t\tSource: " + source_protocol_adr[0].getValue() + "." + source_protocol_adr[1].getValue() + "."
                 + source_protocol_adr[2].getValue() + "." + source_protocol_adr[3].getValue());
-        sb.append("\n\t\tDestination address: " + dest_protocol_adr[0].getValue() + "." + dest_protocol_adr[1].getValue() + "."
+        sb.append("\n\t\tDestination: " + dest_protocol_adr[0].getValue() + "." + dest_protocol_adr[1].getValue() + "."
                 + dest_protocol_adr[2].getValue() + "." + dest_protocol_adr[3].getValue() + "\n");
+        if (get_header_length() != 20) {
+            sb.append("\t\tOptions\n");
+        }
         // mai trebuie schema cu optiuni daca are mai mult de 20 bytes
         return sb.toString();
     }

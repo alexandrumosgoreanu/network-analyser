@@ -1,15 +1,13 @@
 
 public class Byte 
 {
-	private int value;
-	
-	
+	private final int value;
+
 	// Recevoir un string de type "A5"
 	public Byte(String str)
 	{
-		value = Integer.decode("0x"+str);
 		//bits = Integer.toBinaryString(value);
-		
+		value = Integer.decode("0x"+str);
 	}
 	
 	public Byte()
@@ -21,9 +19,8 @@ public class Byte
 		return value;
 	}
 	
-	public String getHexValue()
-	{
-		if(value >=16)
+	public String getHexValue() {
+		if (value >= 16)
 			return Integer.toHexString(value).toUpperCase();
 		else return "0" + Integer.toHexString(value).toUpperCase();
 	}

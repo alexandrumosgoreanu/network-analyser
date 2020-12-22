@@ -41,7 +41,72 @@ public class TCP {
             return "Not set";
         }
     }
+    public int get_header_length() {
+        return header_length;
+    }
+    public String decode_options_TCP(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t\tOptions: (" + (4 * get_header_length() - 20) + " bytes)");
+        for (int i = 0; i < list.size(); i++) {
 
+            switch (new Byte(list.get(i)).getValue()) {
+                case(0): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("End of options list");
+                    break;
+                }
+                case(1): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("No-Operation (NOP)");
+                    sb.append("\n\t\t\t\tKind: No-Operation (1)");
+                    break;
+                }
+                case(2): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("Maximum Segment Size: ");
+                    int x = 0;
+                    x += new Byte("" + list.get(i + 2) + list.get(i + 3)).getValue();
+                    sb.append(x + " bytes" + "\n\t\t\t\tKind: Maximum Segment Size (2)\n\t\t\t\tLength: 4\n\t\t\t\tMSS Value: " + x);
+                    i += 3;
+                    break;
+                }
+                case(3): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("Window scale: " + new Byte(list.get(i + 2)).getValue() + " (multiply by 256)");
+                    sb.append("\n\t\t\t\tKind: Window scale (3)\n\t\t\t\tLength: 3\n\t\t\t\tShift count: 8");
+                    i += 2;
+                    break;
+                }
+                case(4): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("SACK permitted");
+                    sb.append("\n\t\t\t\tKind: SACK permitted (4)\n\t\t\t\tLength: 2");
+                    i += 1;
+                    break;
+                }
+                case(8): {
+                    sb.append("\n\t\t\tTCP Option - ");
+                    sb.append("Timestamps: TSval ");
+                    long x = 0;
+                    x += new Byte("" + list.get(i + 2) + list.get(i + 3) + list.get(i + 4) + list.get(i + 5)).getValue();
+                    sb.append(x + ", TSecr ");
+
+                    long y = 0;
+                    y += new Byte("" + list.get(i + 6) + list.get(i + 7) + list.get(i + 8) + list.get(i + 9)).getValue();
+                    sb.append(y);
+                    sb.append("\n\t\t\t\tKind: Time Stamp Option (8)\n\t\t\t\tLength: 10\n\t\t\t\tTimestamp value: " + x +
+                            "\n\t\t\t\tTimestamp echo reply: " + y);
+                    i += 9;
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -68,7 +133,6 @@ public class TCP {
         sb.append("\n\t\tWindow size value: " + (Window_size_value[0].getValue() * 256 + Window_size_value[1].getValue()));
         sb.append("\n\t\tChecksum: 0x" + Checksum[0].getHexValue() + Checksum[1].getHexValue());
         sb.append("\n\t\tUrgent pointer: " + (Urgent_pointer[0].getValue() * 256 + Urgent_pointer[1].getValue()));
-
         // to do options
         return sb.toString();
     }

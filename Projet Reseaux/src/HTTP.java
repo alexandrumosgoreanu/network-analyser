@@ -9,7 +9,7 @@ public class HTTP {
 @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\tHypertext Transfer Protocol\n");
+        sb.append("\n\tHypertext Transfer Protocol:\n\t\t");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals("0d") && list.get(i + 1).equals("0a")) {
                 if (list.get(i + 2).equals("0d") && list.get(i + 3).equals("0a")) {
@@ -24,12 +24,8 @@ public class HTTP {
         return sb.toString();
     }
 
-
     public char hex_to_ascii(String s) {
-        return (char) Integer.parseInt(s, 16);
+        return (char)Integer.parseInt(s, 16);
     }
-
-
-
 
 }
