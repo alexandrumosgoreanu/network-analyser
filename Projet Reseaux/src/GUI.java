@@ -17,7 +17,7 @@ import java.io.IOException;
 public class GUI
 {
     private static final Text textArea = new Text();
-    public static String fileName;
+    public static String fileName = null;
 
     public GUI(Stage stage)
     {
@@ -32,11 +32,13 @@ public class GUI
         openFileButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             File selectedFile = fileChooser.showOpenDialog(stage);
-            fileName = selectedFile.getPath();
+            if(selectedFile != null)
+            	fileName = selectedFile.getPath();
 
             try {
                 textArea.setText("");
-                Analyser.readFrame(fileName);
+                if(fileName != null)
+                	Analyser.readFrame(fileName);
             } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
